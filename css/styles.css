@@ -1,0 +1,29 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: rgb(233, 128, 143);
+}
+
+#canvas {
+    background-color: white;
+    border: solid black 1px;
+    touch-action: none;
+    position: fixed;
+    z-index: -1;
+    left: 50px;
+    top: 50px;
+    width: calc(100vw - 100px);
+    height: calc(51vw - 100px);
+}
+
+.controls {
+    position: fixed;
+    z-index: 1;
+    right: 48px;
+    top: 28px;
+    text-align: left;
+    display: flex;
+}
