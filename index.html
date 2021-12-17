@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Simple-Drawing-Tool</title>
+</head>
+
+<body>
+    <div class="controls">
+        <select name="" id="changePattern">
+    <option value="normal">Normal Mode</option>
+    <option value="mirrorMode">Mirror Mode</option>
+    <option value="quadrants">Quadrants</option>
+  </select>
+        <input type="number" id="changeLineWidth" min="1" max="15" value="3">
+        <select name="" id="changeColor">
+    <option value="#000">Black</option>
+    <option value="#ff00ff">Pink</option>
+    <option value="#ff0000">Red</option>
+    <option value="66ff00">Green</option>
+    <option value="#0000ff">Blue</option>
+    <option value="#ffff00">Yellow</option>
+  </select>
+        <button id="clearCanvas">Clear</button>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
