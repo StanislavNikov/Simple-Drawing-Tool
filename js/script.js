@@ -1,12 +1,17 @@
 // IIFE
 (function() {
-    const changePattern = document.querySelector('#changePattern'),
-        changeLineWidth = document.querySelector('#changeLineWidth'),
+    const
         changeColor = document.querySelector('#changeColor'),
+        changeLineWidth = document.querySelector('#changeLineWidth'),
+        changePattern = document.querySelector('#changePattern'),
         canvas = document.querySelector('#canvas'),
         ctx = canvas.getContext('2d');
 
-    let isDrawing = false,
+    let currentColor = changeColor.value,
+
+        currentLineWidth = changeLineWidth.value,
+        currentPattern = changePattern.value,
+        isDrawing = false,
         previousX = null,
         previousY = null;
 
@@ -42,8 +47,8 @@
         ctx.lineTo(x, y);
 
         // Set the style of the line
-        ctx.lineWidth = changeLineWidth.value;
-        ctx.strokeStyle = changeColor.value;
+        ctx.lineWidth = currentLineWidth;
+        ctx.strokeStyle = currentColor;
         ctx.stroke();
 
         // Set previous coordinates for next move event
@@ -63,6 +68,20 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    function handleChangeColor() {
+        currentColor = changeColor.value;
+    }
+
+    function handleChangeLineWidth() {
+        currentLineWidth = changeLineWidth.value;
+    }
+
+    function handleChangePattern() {
+        currentPattern = changePattern.value;
+    }
+    changeColor.addEventListener('change', handleChangeColor);
+    changeLineWidth.addEventListener('change', handleChangeLineWidth);
+    changePattern.addEventListener('change', handleChangePattern);
     document.querySelector('#clearCanvas').addEventListener('click', clearCanvas);
     canvas.addEventListener('pointerdown', handleStart);
     canvas.addEventListener('pointerup', handleEnd);
