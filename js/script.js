@@ -11,7 +11,7 @@
         currentLineWidth = changeLineWidth.value,
         currentPattern = changePattern.value,
         isDrawing = false,
-        previousCoords = { x: null, y: null };
+        previousCoords = [{ x: null, y: null }];
 
     captureCanvasDimensions();
 
@@ -23,8 +23,10 @@
     // Function to stop drawing and reseting previousCoords
     function handleEnd() {
         isDrawing = false;
-        previousCoords.x = null;
-        previousCoords.y = null;
+        previousCoords.forEach(item => {
+            item.x = null;
+            item.y = null;
+        })
     }
 
     // Function checks the value of isDrawing() then sets x,y to match the cursor coordinates and calls draw(x, y)
@@ -40,25 +42,46 @@
         draw(x, y);
     }
 
-    // Function to draw a line from previousCoords to x, y
+    // Function to draw a line from previousCoords to newX, Y
     function draw(x, y) {
-        if (!previousCoords.x) {
-            previousCoords.x = x;
-            previousCoords.y = y;
-        }
+        // Destructuring  
+        const { width, height } = canvas;
 
-        // Draw a line from previousX/previousY to x/y
-        ctx.beginPath();
-        ctx.moveTo(previousCoords.x, previousCoords.y);
-        ctx.lineTo(x, y);
+        previousCoords.forEach((coords, i) => {
+            let newX, newY;
 
-        // Set the style of the line
-        ctx.lineWidth = currentLineWidth;
-        ctx.strokeStyle = currentColor;
-        ctx.stroke();
+            if (i === 0) {
+                newX = x;
+                newY = y;
+            } else if (i === 1) {
+                newX = width - x;
+                newY = y;
+            } else if (i === 2) {
+                newX = width - x;
+                newY = height - y;
+            } else {
+                newX = x;
+                newY = height - y;
+            }
 
-        previousCoords.x = x;
-        previousCoords.y = y;
+            if (!coords.x) {
+                coords.x = newX;
+                coords.y = newY;
+            }
+            // Draw a line from the previousCoords to the new x/y
+            ctx.beginPath();
+            ctx.moveTo(coords.x, coords.y);
+            ctx.lineTo(newX, newY); // ctx.lineTo(x, y); = nice weird effect
+
+
+            // Set the style of the line
+            ctx.lineWidth = currentLineWidth;
+            ctx.strokeStyle = currentColor;
+            ctx.stroke();
+
+            coords.x = newX;
+            coords.y = newY;
+        })
     }
 
     // Function captures the Dimensions of the Canvas
@@ -82,6 +105,14 @@
 
     function handleChangePattern() {
         currentPattern = changePattern.value;
+
+        if (currentPattern === 'normal') {
+            previousCoords = [{ x: null, y: null }]
+        } else if (currentPattern === 'mirrorMode') {
+            previousCoords = [...previousCoords, { x: null, y: null }]
+        } else if (currentPattern === 'quadrants') {
+            previousCoords = [...previousCoords, { x: null, y: null }, { x: null, y: null }, { x: null, y: null }]
+        }
     }
 
     changeColor.addEventListener('change', handleChangeColor);
