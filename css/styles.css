@@ -27,3 +27,17 @@ body {
     text-align: left;
     display: flex;
 }
+
+select,
+button,
+input {
+    background-color: pink;
+    display: block;
+    padding: 0 1em;
+    border: 1px solid black;
+    border-radius: 0.25em;
+    outline: 0;
+    font: inherit;
+    color: black;
+    cursor: pointer;
+}
