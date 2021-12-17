@@ -36,8 +36,10 @@
             return;
         }
 
-        let x = e.pageX;
-        let y = e.pageY;
+        const top = +window.getComputedStyle(canvas).getPropertyValue('top').slice(0, -2),
+            left = +window.getComputedStyle(canvas).getPropertyValue('left').slice(0, -2);
+        x = e.pageX - left;
+        y = e.pageY - top;
 
         draw(x, y);
     }
